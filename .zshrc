@@ -111,7 +111,7 @@ export GOPATH=$HOME/go
 [[ ! -r /home/steven/.opam/opam-init/init.zsh ]] || source /home/steven/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 . "/home/steven/.deno/env"
 
-export JAVA_HOME=/opt/android-studio/jbr
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 
 # Android SDK paths
 export ANDROID_HOME="$HOME/Android/Sdk"  # This is the default path, adjust if different
