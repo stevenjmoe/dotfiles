@@ -24,6 +24,7 @@
         "hyprland/language",
         "clock",
         "tray",
+		"battery",
 		"custom/power"
     ],
      "hyprland/workspaces": {
