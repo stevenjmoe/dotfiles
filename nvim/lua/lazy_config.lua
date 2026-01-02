@@ -43,9 +43,6 @@ require("lazy").setup({
 				lsp_fallback = true,
 			}
 		},
-		formatters_by_ft = {
-			lua = { 'stylua' },
-		}
 	},
 	{
 		"folke/todo-comments.nvim",
