@@ -126,7 +126,12 @@ require("lazy").setup({
 					"obsidian_tags",
 				},
 				providers = {
-					dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+					lsp = { score_offset = 50 },
+					dadbod = {
+						name = "Dadbod",
+						module = "vim_dadbod_completion.blink",
+						score_offset = 50
+					},
 					obsidian = {
 						name = "obsidian",
 						module = "blink.compat.source",
@@ -139,6 +144,9 @@ require("lazy").setup({
 						name = "obsidian_tags",
 						module = "blink.compat.source",
 					},
+					snippets = { max_items = 5, score_offset = -50 },
+					path = { max_items = 5, score_offset = -50 },
+					buffer = { max_items = 5, score_offset = -50 }
 				},
 			},
 			signature = { enabled = true },
