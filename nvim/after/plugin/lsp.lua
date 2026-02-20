@@ -38,6 +38,7 @@ local servers = {
 		}
 	},
 	ocamllsp = {
+		cmd = { "opam", "exec", "--switch=.", "--", "ocamllsp" },
 		settings = {
 			extendedHover = { enable = true },
 			codelens = { enable = true },
