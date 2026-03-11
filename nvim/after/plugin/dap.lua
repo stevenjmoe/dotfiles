@@ -47,14 +47,52 @@ dap.configurations.ocaml = {
 		program = '${workspaceFolder}/_build/default/debug/debug.bc',
 	},
 }
+dap.configurations.fsharp = {
+	{
+		type = "cs",
+		name = "launch - netcoredbg",
+		request = "launch",
+		program = function()
+			local co = coroutine.running()
+
+			require("telescope.builtin").find_files({
+				prompt_title = "Select DLL",
+				cwd = vim.fn.getcwd(),
+				no_ignore = true,
+				find_command = { "rg", "--files", "--no-ignore", "-g", "**/bin/**/*.dll" },
+				attach_mappings = function(prompt_bufnr)
+					local actions = require("telescope.actions")
+					local action_state = require("telescope.actions.state")
+
+					actions.select_default:replace(function()
+						local entry = action_state.get_selected_entry()
+						actions.close(prompt_bufnr)
+						local path = entry.path or entry.filename or entry.value
+						coroutine.resume(co, path)
+					end)
+
+					return true
+				end,
+			})
+			return coroutine.yield()
+		end,
+	},
+	{
+		type = "cs",
+		name = "attach - netcoredbg",
+		request = "attach",
+		processId = '${command:pickProcess}'
+	}
+}
+
 
 -- keymaps
 vim.keymap.set('n', '<F5>', function() dap.continue() end, { desc = "DAP continue" })
 vim.keymap.set('n', '<F1>', function() dap.restart() end, { desc = "DAP restart" })
 vim.keymap.set('n', '<F2>', function() dap.terminate() end, { desc = "DAP terminate" })
-vim.keymap.set('n', '<F10>', function() dap.step_over() end, { desc = "DAP step over" })
-vim.keymap.set('n', '<F11>', function() dap.step_into() end, { desc = "DAP step into" })
-vim.keymap.set('n', '<F12>', function() dap.step_out() end, { desc = "DAP step out" })
+vim.keymap.set('n', '<F8>', function() dap.step_over() end, { desc = "DAP step over" })
+vim.keymap.set('n', '<F9>', function() dap.step_into() end, { desc = "DAP step into" })
+vim.keymap.set('n', '<F10>', function() dap.step_out() end, { desc = "DAP step out" })
 vim.keymap.set('n', '<Leader>db', function() dap.toggle_breakpoint() end, { desc = "Toggle breakpoint" })
 vim.keymap.set('n', '<Leader>dr', function() dap.repl.open() end, { desc = "DAP open repl" })
 vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end, { desc = "DAP run last" })

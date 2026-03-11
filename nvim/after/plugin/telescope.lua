@@ -43,12 +43,8 @@ require('telescope').setup {
 		}
 	},
 	pickers = {
-		find_files = {
-			theme = "dropdown"
-		},
-		live_grep = {
-			theme = "dropdown"
-		},
+		find_files = {},
+		live_grep = {},
 		grep_string = {
 			theme = "dropdown"
 		},
