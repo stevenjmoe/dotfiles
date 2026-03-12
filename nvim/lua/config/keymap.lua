@@ -23,7 +23,14 @@ end, { desc = "Toggle inlay hint" })
 -- Stuff with buffers
 vim.keymap.set('n', '<leader>so', "<cmd>only<CR>zz")
 vim.keymap.set('n', '<leader>bdd', "<cmd>bd<CR>zz")
-vim.keymap.set('n', '<leader>bda', "<cmd>%bd<CR>zz")
+vim.keymap.set('n', '<leader>bda', function()
+	local current = vim.api.nvim_get_current_buf()
+	for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+		if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
+			vim.cmd("bd" .. buf)
+		end
+	end
+end)
 vim.keymap.set('n', '<leader>bd.', "<cmd>%bd|e #|normal`\"<CR>zz",
 	{ desc = "Delete all but the current buffer and maintain position in buffer" })
 
