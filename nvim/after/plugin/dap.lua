@@ -96,23 +96,6 @@ vim.keymap.set('n', '<F10>', function() dap.step_out() end, { desc = "DAP step o
 vim.keymap.set('n', '<Leader>db', function() dap.toggle_breakpoint() end, { desc = "Toggle breakpoint" })
 vim.keymap.set('n', '<Leader>dr', function() dap.repl.open() end, { desc = "DAP open repl" })
 vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end, { desc = "DAP run last" })
-vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function()
-	require('dap.ui.widgets').hover()
-end, { desc = "DAP hover" })
-
-vim.keymap.set({ 'n', 'v' }, '<Leader>dp', function()
-	require('dap.ui.widgets').preview()
-end, { desc = "DAP preview" })
-
-vim.keymap.set('n', '<Leader>df', function()
-	local widgets = require('dap.ui.widgets')
-	widgets.centered_float(widgets.frames)
-end, { desc = "DAP frames" })
-
-vim.keymap.set('n', '<Leader>ds', function()
-	local widgets = require('dap.ui.widgets')
-	widgets.centered_float(widgets.scopes)
-end, { desc = "DAP scopes" })
 
 dapui.setup({
 	icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
@@ -138,13 +121,20 @@ dapui.setup({
 			terminate = "□",
 		},
 	},
+	layouts = { {
+		elements = {
+			{ id = "repl", size = 1 },
+		},
+		position = "bottom",
+		size = 12
+	} },
 })
 
 dap.listeners.before.attach.dapui_config = function()
-	dapui.open()
+	dapui.open({ reset = true })
 end
 dap.listeners.before.launch.dapui_config = function()
-	dapui.open()
+	dapui.open({ reset = true })
 end
 dap.listeners.before.event_terminated.dapui_config = function()
 	dapui.close()
@@ -154,4 +144,42 @@ dap.listeners.before.event_exited.dapui_config = function()
 end
 
 -- dapui keymaps
-vim.keymap.set({ 'v', 'n' }, '<Leader>de', function() dapui.eval() end, { desc = "DAP eval" })
+vim.keymap.set({ 'v', 'n' }, '<Leader>de', function() dapui.eval() end, { desc = "DAPUI eval" })
+
+vim.keymap.set({ 'n', 'v' }, '<Leader>dh', function()
+	require('dap.ui.widgets').hover()
+end, { desc = "DAPUI hover" })
+
+vim.keymap.set({ 'v' }, '<Leader>dp', function()
+	require('dap.ui.widgets').preview()
+end, { desc = "DAPUI preview" })
+
+vim.keymap.set({ 'n' }, '<Leader>dB', function()
+	dapui.float_element("breakpoints", { enter = true })
+end, { desc = "DAPUI breakpoints" })
+
+vim.keymap.set('n', '<Leader>df', function()
+	local widgets = require('dap.ui.widgets')
+	widgets.centered_float(widgets.frames)
+end, { desc = "DAPUI widgets" })
+
+vim.keymap.set('n', '<Leader>dz', function()
+	local widgets = require('dap.ui.widgets')
+	widgets.centered_float(widgets.scopes)
+end, { desc = "DAPUI scopes" })
+
+vim.keymap.set('n', '<Leader>dc', function()
+	dapui.float_element("console")
+end, { desc = "DAPUI Console" })
+
+vim.keymap.set('n', '<Leader>dw', function()
+	dapui.float_element("watches", { enter = true })
+end, { desc = "DAPUI Watches" })
+
+vim.keymap.set('n', '<Leader>dr', function()
+	dapui.float_element("repl")
+end, { desc = "DAPUI repl" })
+
+vim.keymap.set('n', '<Leader>do', function()
+	dapui.open({ reset = true })
+end, { desc = "DAPUI reopen and reset windows." })
