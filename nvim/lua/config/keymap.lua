@@ -28,7 +28,10 @@ vim.keymap.set('n', '<leader>bda', "<cmd>%bd<CR>zz")
 vim.keymap.set('n', '<leader>bd.', function()
 		local current = vim.api.nvim_get_current_buf()
 		for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-			if buf ~= current and vim.api.nvim_buf_is_loaded(buf) then
+			if buf ~= current
+				and vim.api.nvim_buf_is_loaded(buf)
+				and vim.bo[buf].buflisted
+				and vim.bo[buf].buftype == "" then
 				vim.cmd("bd" .. buf)
 			end
 		end
