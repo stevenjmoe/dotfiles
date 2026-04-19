@@ -16,42 +16,41 @@ require("lazy").setup({
 	-- color scheme
 	"rebelot/kanagawa.nvim",
 
-	{ 'williamboman/mason.nvim' },
-	{ 'williamboman/mason-lspconfig.nvim' },
+	{ "williamboman/mason.nvim" },
+	{ "williamboman/mason-lspconfig.nvim" },
 	{ "neovim/nvim-lspconfig" },
-	{ 'L3MON4D3/LuaSnip' },
-
+	{ "L3MON4D3/LuaSnip" },
 
 	{
-		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
-		dependencies = { 'nvim-lua/plenary.nvim' }
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
 	{ "nvim-treesitter/nvim-treesitter",            build = ":TSUpdate" },
 	{ "nvim-treesitter/nvim-treesitter-textobjects" },
 
 	-- git
-	{ 'tpope/vim-fugitive' },
+	{ "tpope/vim-fugitive" },
 	"mbbill/undotree",
-	{ 'WhoIsSethDaniel/mason-tool-installer.nvim' },
+	{ "WhoIsSethDaniel/mason-tool-installer.nvim" },
 	{
-		'stevearc/conform.nvim',
+		"stevearc/conform.nvim",
 		opts = {
 			notify_on_error = false,
 			format_on_save = {
 				timeout_ms = 500,
 				lsp_fallback = true,
-			}
+			},
 		},
 	},
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {}
+		opts = {},
 	},
 	{
-		'christoomey/vim-tmux-navigator',
+		"christoomey/vim-tmux-navigator",
 		cmd = {
 			"TmuxNavigateLeft",
 			"TmuxNavigateDown",
@@ -72,55 +71,54 @@ require("lazy").setup({
 		dependencies = {
 			"neovim/nvim-lspconfig",
 		},
-		ft = { "fsharp" },
-		build = function()
-			vim.fn.system({ "dotnet", "tool", "install", "--global", "fsautocomplete" })
-		end,
+		ft = { "fsharp", "fsharp_project" },
+		--build = function()
+		--	vim.fn.system({ "dotnet", "tool", "install", "--global", "fsautocomplete" })
+		--end,
 	},
 	{
-		'rescript-lang/vim-rescript',
-		tag = "v2.1.0"
+		"rescript-lang/vim-rescript",
+		tag = "v2.1.0",
 	},
 	{
-		'nvim-flutter/flutter-tools.nvim',
+		"nvim-flutter/flutter-tools.nvim",
 		lazy = false,
 		dependencies = {
-			'nvim-lua/plenary.nvim',
-			'stevearc/dressing.nvim', -- optional for vim.ui.select
+			"nvim-lua/plenary.nvim",
+			"stevearc/dressing.nvim", -- optional for vim.ui.select
 		},
 		config = true,
 	},
-	{ 'mfussenegger/nvim-dap' },
+	{ "mfussenegger/nvim-dap" },
 	{
 		"rcarriga/nvim-dap-ui",
-		dependencies =
-		{
+		dependencies = {
 			"mfussenegger/nvim-dap",
-			"nvim-neotest/nvim-nio"
-		}
+			"nvim-neotest/nvim-nio",
+		},
 	},
 	{
-		'saghen/blink.cmp',
+		"saghen/blink.cmp",
 		-- optional: provides snippets for the snippet source
-		dependencies = { 'rafamadriz/friendly-snippets' },
+		dependencies = { "rafamadriz/friendly-snippets" },
 
-		version = '1.*',
+		version = "1.*",
 
 		opts = {
-			keymap = { preset = 'default' },
+			keymap = { preset = "default" },
 
 			appearance = {
 				-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-				nerd_font_variant = 'mono'
+				nerd_font_variant = "mono",
 			},
 
 			-- (Default) Only show the documentation popup when manually triggered
 			completion = { documentation = { auto_show = false } },
 
 			sources = {
-				default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
+				default = { "lsp", "path", "snippets", "buffer", "dadbod" },
 				per_filetype = {
-					sql = { 'dadbod' },
+					sql = { "dadbod" },
 					markdown = { inherit_defaults = true },
 				},
 				providers = {
@@ -128,11 +126,11 @@ require("lazy").setup({
 					dadbod = {
 						name = "Dadbod",
 						module = "vim_dadbod_completion.blink",
-						score_offset = 50
+						score_offset = 50,
 					},
 					snippets = { max_items = 5, score_offset = -50 },
 					path = { max_items = 5, score_offset = -50 },
-					buffer = { max_items = 5, score_offset = -50 }
+					buffer = { max_items = 5, score_offset = -50 },
 				},
 			},
 			signature = { enabled = true },
@@ -142,19 +140,23 @@ require("lazy").setup({
 				sources = function()
 					local type = vim.fn.getcmdtype()
 					-- Search forward and backward
-					if type == '/' or type == '?' then return { 'buffer' } end
+					if type == "/" or type == "?" then
+						return { "buffer" }
+					end
 					-- Commands
-					if type == ':' then return { 'cmdline' } end
+					if type == ":" then
+						return { "cmdline" }
+					end
 					return {}
 				end,
 			},
 
 			fuzzy = { implementation = "lua" },
 		},
-		opts_extend = { "sources.default" }
+		opts_extend = { "sources.default" },
 	},
 	{
-		'stevearc/oil.nvim',
+		"stevearc/oil.nvim",
 		---@module 'oil'
 		---@type oil.SetupOpts
 		opts = {},
@@ -163,19 +165,19 @@ require("lazy").setup({
 	},
 	{ "tpope/vim-dadbod" },
 	{
-		'kristijanhusak/vim-dadbod-ui',
+		"kristijanhusak/vim-dadbod-ui",
 		dependencies = {
 			{
-				'tpope/vim-dadbod',
-				lazy = true
+				"tpope/vim-dadbod",
+				lazy = true,
 			},
-			{ 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
+			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true }, -- Optional
 		},
 		cmd = {
-			'DBUI',
-			'DBUIToggle',
-			'DBUIAddConnection',
-			'DBUIFindBuffer',
+			"DBUI",
+			"DBUIToggle",
+			"DBUIAddConnection",
+			"DBUIFindBuffer",
 		},
 		init = function()
 			-- Your DBUI configuration
@@ -184,13 +186,11 @@ require("lazy").setup({
 	},
 	{
 		"folke/zen-mode.nvim",
-		opts = {
-		}
+		opts = {},
 	},
 	{
 		"folke/twilight.nvim",
-		opts = {
-		}
+		opts = {},
 	},
 	{
 		"folke/noice.nvim",
@@ -205,11 +205,11 @@ require("lazy").setup({
 			--   `nvim-notify` is only needed, if you want to use the notification view.
 			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
-		}
+		},
 	},
 	{
-		'MeanderingProgrammer/render-markdown.nvim',
-		dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
 		---@module 'render-markdown'
 		---@type render.md.UserConfig
 		opts = {},
@@ -224,7 +224,7 @@ require("lazy").setup({
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			'saghen/blink.cmp',
+			"saghen/blink.cmp",
 		},
 		opts = {
 			workspaces = {
@@ -239,9 +239,9 @@ require("lazy").setup({
 				min_chars = 0,
 				create_new = false,
 			},
-			new_notes_location = 'current_dir',
+			new_notes_location = "current_dir",
 			disable_frontmatter = true,
 			legacy_commands = false,
 		},
-	}
+	},
 })

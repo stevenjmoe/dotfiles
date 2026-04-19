@@ -1,4 +1,4 @@
-require('flutter-tools').setup {}
+require("flutter-tools").setup({})
 
 local servers = {
 	lua_ls = {
@@ -6,26 +6,26 @@ local servers = {
 			Lua = {
 				inlayHints = { enable = true },
 				runtime = {
-					version = 'LuaJIT'
+					version = "LuaJIT",
 				},
 				diagnostics = {
-					globals = { 'vim' },
+					globals = { "vim" },
 				},
 				workspace = {
 					library = {
 						vim.env.VIMRUNTIME,
-					}
-				}
-			}
+					},
+				},
+			},
 		},
 	},
 	html = {
 		settings = {
-			filetypes = { 'html', 'templ' },
-		}
+			filetypes = { "html", "templ" },
+		},
 	},
 	htmx = {
-		filetypes = { 'html', 'templ' },
+		filetypes = { "html", "templ" },
 	},
 	tailwindcss = {
 		filetypes = { "templ", "astro", "javascript", "typescript", "react", "svelte" },
@@ -34,8 +34,8 @@ local servers = {
 				includeLanguages = {
 					templ = "html",
 				},
-			}
-		}
+			},
+		},
 	},
 	ocamllsp = {
 		cmd = { "opam", "exec", "--switch=.", "--", "ocamllsp" },
@@ -54,7 +54,7 @@ local servers = {
 			"ocaml.mlx",
 			"ocaml.ocamllex",
 			"reason",
-		}
+		},
 	},
 	ts_ls = {
 		settings = {
@@ -79,14 +79,14 @@ local servers = {
 					includeInlayPropertyDeclarationTypeHints = true,
 					includeInlayVariableTypeHints = false,
 				},
-			}
+			},
 		},
 	},
 	gopls = {},
 	svelte = {},
 	rust_analyzer = {},
 	omnisharp = {
-		cmd = { "dotnet", "/home/steven/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll" }
+		cmd = { "dotnet", "/home/steven/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll" },
 	},
 	rescriptls = {},
 	zls = {},
@@ -118,13 +118,13 @@ local servers_to_install = vim.tbl_filter(function(key)
 	end
 end, vim.tbl_keys(servers))
 
-require('mason').setup({})
+require("mason").setup({})
 
 vim.list_extend(ensure_installed, servers_to_install)
-require("mason-tool-installer").setup { ensure_installed = ensure_installed }
+require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 for name, config in pairs(servers) do
-	local capabilities = require('blink.cmp').get_lsp_capabilities()
+	local capabilities = require("blink.cmp").get_lsp_capabilities()
 	if config == true then
 		config = {}
 	end
@@ -132,16 +132,16 @@ for name, config in pairs(servers) do
 		capabilities = capabilities,
 	}, config)
 
-	require('lspconfig')[name].setup(config)
-	require('lspconfig').gleam.setup({})
+	vim.lsp.config(name, config)
+	vim.lsp.enable(name)
 end
 
 local disable_semantic_tokens = {
 	lua = true,
 }
 
-vim.api.nvim_create_autocmd('LspAttach', {
-	desc = 'LSP actions',
+vim.api.nvim_create_autocmd("LspAttach", {
+	desc = "LSP actions",
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(args)
 		local bufnr = args.buf
@@ -156,17 +156,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
 			settings = {}
 		end
 
-		vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
-		vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action)
-		vim.keymap.set('i', '<C-space>', vim.lsp.buf.completion)
-		vim.keymap.set('n', '<leader>fd', vim.lsp.buf.format)
-		vim.keymap.set('n', 'H', vim.lsp.buf.hover)
-		vim.keymap.set('n', '<C-H>', vim.lsp.buf.signature_help)
-		vim.keymap.set('i', '<C-H>', vim.lsp.buf.signature_help)
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
+		vim.keymap.set("i", "<C-space>", vim.lsp.buf.completion)
+		vim.keymap.set("n", "<leader>fd", vim.lsp.buf.format)
+		vim.keymap.set("n", "H", vim.lsp.buf.hover)
+		vim.keymap.set("n", "<C-H>", vim.lsp.buf.signature_help)
+		vim.keymap.set("i", "<C-H>", vim.lsp.buf.signature_help)
 
-		vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition)
-		vim.keymap.set('n', '<leader>gD', vim.lsp.buf.declaration)
-		vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation)
+		vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition)
+		vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration)
+		vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation)
 
 		local filetype = vim.bo[bufnr].filetype
 		if disable_semantic_tokens[filetype] then
@@ -188,7 +188,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- Workaround for annoying rust-analyzer client error.
 -- Hopefully it's fixed and this can be removed
-for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+for _, method in ipairs({ "textDocument/diagnostic", "workspace/diagnostic" }) do
 	local default_diagnostic_handler = vim.lsp.handlers[method]
 	vim.lsp.handlers[method] = function(err, result, context, config)
 		if err ~= nil and err.code == -32802 then
