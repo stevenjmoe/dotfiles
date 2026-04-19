@@ -90,7 +90,7 @@ local servers = {
 	},
 	rescriptls = {},
 	zls = {},
-	marksman = {},
+	--marksman = {},
 	-- omnisharp = {
 	-- 	cmd = {
 	-- 		"dotnet",

@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	vim.fn.system({
 		"git",
@@ -100,30 +101,27 @@ require("lazy").setup({
 	},
 	{
 		'saghen/blink.cmp',
-		dependencies = {
-			'rafamadriz/friendly-snippets',
-			{ "saghen/blink.compat", lazy = true, version = false },
-		},
+		-- optional: provides snippets for the snippet source
+		dependencies = { 'rafamadriz/friendly-snippets' },
 
-		version = 'v0.*',
+		version = '1.*',
+
 		opts = {
 			keymap = { preset = 'default' },
 
 			appearance = {
-				use_nvim_cmp_as_default = true,
+				-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
 				nerd_font_variant = 'mono'
 			},
+
+			-- (Default) Only show the documentation popup when manually triggered
+			completion = { documentation = { auto_show = false } },
+
 			sources = {
-				-- compat = { "obsidian", "obsidian_new", "obsidian_tags" },
-				default = {
-					"lsp",
-					"path",
-					"snippets",
-					"buffer",
-					"dadbod",
-					"obsidian",
-					"obsidian_new",
-					"obsidian_tags",
+				default = { 'lsp', 'path', 'snippets', 'buffer' },
+				per_filetype = {
+					sql = { 'dadbod' },
+					markdown = { inherit_defaults = true },
 				},
 				providers = {
 					lsp = { score_offset = 50 },
@@ -131,18 +129,6 @@ require("lazy").setup({
 						name = "Dadbod",
 						module = "vim_dadbod_completion.blink",
 						score_offset = 50
-					},
-					obsidian = {
-						name = "obsidian",
-						module = "blink.compat.source",
-					},
-					obsidian_new = {
-						name = "obsidian_new",
-						module = "blink.compat.source",
-					},
-					obsidian_tags = {
-						name = "obsidian_tags",
-						module = "blink.compat.source",
 					},
 					snippets = { max_items = 5, score_offset = -50 },
 					path = { max_items = 5, score_offset = -50 },
@@ -161,8 +147,11 @@ require("lazy").setup({
 					if type == ':' then return { 'cmdline' } end
 					return {}
 				end,
-			}
+			},
+
+			fuzzy = { implementation = "lua" },
 		},
+		opts_extend = { "sources.default" }
 	},
 	{
 		'stevearc/oil.nvim',
@@ -225,4 +214,34 @@ require("lazy").setup({
 		---@type render.md.UserConfig
 		opts = {},
 	},
+	{
+		"obsidian-nvim/obsidian.nvim",
+		version = "*",
+		lazy = true,
+		event = {
+			"BufReadPre " .. vim.fn.expand "~" .. "/obsidian/vaults/*.md",
+			"BufNewFile " .. vim.fn.expand "~" .. "/obsidian/vaults/*.md",
+		},
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			'saghen/blink.cmp',
+		},
+		opts = {
+			workspaces = {
+				{
+					name = "personal",
+					path = "~/obsidian/vaults/personal",
+				},
+			},
+			completion = {
+				nvim_cmp = false,
+				blink = true,
+				min_chars = 0,
+				create_new = false,
+			},
+			new_notes_location = 'current_dir',
+			disable_frontmatter = true,
+			legacy_commands = false,
+		},
+	}
 })
