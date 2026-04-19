@@ -118,7 +118,7 @@ require("lazy").setup({
 			completion = { documentation = { auto_show = false } },
 
 			sources = {
-				default = { 'lsp', 'path', 'snippets', 'buffer' },
+				default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod' },
 				per_filetype = {
 					sql = { 'dadbod' },
 					markdown = { inherit_defaults = true },
