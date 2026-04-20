@@ -136,6 +136,14 @@ for name, config in pairs(servers) do
 	vim.lsp.enable(name)
 end
 
+vim.lsp.config('ionide', {
+	cmd = { 'fsautocomplete' },
+	on_attach = function(client, _)
+		-- fixes a freezing issue. Hopefully it can be removed when a fix is done.
+		client.server_capabilities.semanticTokensProvider = nil
+	end,
+})
+
 local disable_semantic_tokens = {
 	lua = true,
 }
