@@ -53,6 +53,7 @@ dap.configurations.fsharp = {
 		name = "launch - netcoredbg",
 		request = "launch",
 		program = function()
+			os.execute("dotnet build")
 			local co = coroutine.running()
 
 			require("telescope.builtin").find_files({
