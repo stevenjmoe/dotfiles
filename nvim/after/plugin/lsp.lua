@@ -85,9 +85,7 @@ local servers = {
 	gopls = {},
 	svelte = {},
 	rust_analyzer = {},
-	omnisharp = {
-		cmd = { "dotnet", "/home/steven/.local/share/nvim/mason/packages/omnisharp/libexec/OmniSharp.dll" },
-	},
+	omnisharp = {},
 	rescriptls = {},
 	zls = {},
 	--marksman = {},
