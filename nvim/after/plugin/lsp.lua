@@ -171,6 +171,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("i", "<C-H>", vim.lsp.buf.signature_help)
 
 		vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition)
+		vim.keymap.set("n", "<leader>gvd", function()
+			vim.cmd("vsplit")
+			vim.lsp.buf.definition()
+		end, { desc = "Go to definition in vertical split" })
+
+		vim.keymap.set("n", "<leader>ghd", function()
+			vim.cmd("split")
+			vim.lsp.buf.definition()
+		end, { desc = "Go to definition in horizontal split" })
+
 		vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration)
 		vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation)
 
