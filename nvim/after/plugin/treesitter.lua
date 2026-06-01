@@ -37,12 +37,6 @@ configs.setup({
 				["[F"] = "@function.outer",
 				["[]"] = "@class.outer",
 			},
-			goto_next = {
-				["]c"] = "@conditional.outer",
-			},
-			goto_previous = {
-				["[c"] = "@conditional.outer",
-			},
 		},
 	},
 })
