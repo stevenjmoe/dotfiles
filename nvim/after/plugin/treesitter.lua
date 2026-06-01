@@ -1,4 +1,4 @@
-local configs = require("nvim-treesitter.configs")
+local configs = require("nvim-treesitter")
 
 configs.setup({
 	highlight = { enable = true },
@@ -42,7 +42,7 @@ configs.setup({
 			},
 			goto_previous = {
 				["[c"] = "@conditional.outer",
-			}
+			},
 		},
 	},
 })

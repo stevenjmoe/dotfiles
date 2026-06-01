@@ -27,8 +27,16 @@ require("lazy").setup({
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
-	{ "nvim-treesitter/nvim-treesitter",            build = ":TSUpdate" },
-	{ "nvim-treesitter/nvim-treesitter-textobjects" },
+	{
+		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		branch = "main",
+		build = ":TSUpdate",
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		branch = "main",
+	},
 
 	-- git
 	{ "tpope/vim-fugitive" },
@@ -59,10 +67,10 @@ require("lazy").setup({
 			"TmuxNavigatePrevious",
 		},
 		keys = {
-			{ "<c-H>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
-			{ "<c-J>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
-			{ "<c-K>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
-			{ "<c-L>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-H>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-J>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-K>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-L>", "<cmd><C-U>TmuxNavigateRight<cr>" },
 			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
 		},
 	},
@@ -219,8 +227,8 @@ require("lazy").setup({
 		version = "*",
 		lazy = true,
 		event = {
-			"BufReadPre " .. vim.fn.expand "~" .. "/obsidian/vaults/*.md",
-			"BufNewFile " .. vim.fn.expand "~" .. "/obsidian/vaults/*.md",
+			"BufReadPre " .. vim.fn.expand("~") .. "/obsidian/vaults/*.md",
+			"BufNewFile " .. vim.fn.expand("~") .. "/obsidian/vaults/*.md",
 		},
 		dependencies = {
 			"nvim-lua/plenary.nvim",
