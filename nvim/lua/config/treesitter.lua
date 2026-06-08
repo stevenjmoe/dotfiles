@@ -1,4 +1,4 @@
-local filetypes = { 'fsharp', 'sql', 'csharp', 'lua', 'rust', 'svelte', 'javascript', 'typescript', 'css' }
+local filetypes = { 'fsharp', 'sql', 'csharp', 'lua', 'rust', 'svelte', 'javascript', 'typescript', 'css', 'ocaml' }
 
 vim.api.nvim_create_autocmd('FileType', {
 	pattern = filetypes,

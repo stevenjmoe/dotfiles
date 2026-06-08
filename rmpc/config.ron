@@ -133,10 +133,6 @@
         ),
         (
             name: "Artists",
-            pane: Pane(Artists),
-        ),
-        (
-            name: "Album Artists",
             pane: Pane(AlbumArtists),
         ),
         (
