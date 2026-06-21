@@ -100,6 +100,7 @@ local servers = {
 	angularls = {},
 	clangd = {},
 	kotlin_language_server = {},
+	elixirls = {},
 }
 
 local ensure_installed = {
